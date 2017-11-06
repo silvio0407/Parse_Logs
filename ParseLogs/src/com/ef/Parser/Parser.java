@@ -33,6 +33,7 @@ public class Parser {
 	
 	private static Integer OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY = 250;
 	
+	private static LocalDateTime requestEndTime = null;
 	private static LocalDateTime startDate = null;
 	private static String duration = null;
 	private static Integer threshold = null;
@@ -53,7 +54,7 @@ public class Parser {
 		if(VALID_DURATION.equals(duration)){
 			try
 	        {
-	            FileReader fr = new FileReader("c:/Estudo_Java/WalletHub/Test/access.log");/*("c:/Estudo_Java/WalletHub/Test/test.txt");*/
+	            FileReader fr = new FileReader("c:/Silvio/access.log");/*("c:/Estudo_Java/WalletHub/Test/test.txt");*/
 	            BufferedReader br = new BufferedReader(fr);
 	            String line;
 	            List<Log> logs = new ArrayList<Log>();
@@ -63,23 +64,14 @@ public class Parser {
 	            	
 	            	if(logInformations.length == LINE_VALUE_PARAMETER)
 	            	{
-	            		//pegar a data informada e adicionar uma hora a mais para end date
-	            		//if(OPERATION_THRESHOLD_ONE_HUNDRED == threshold){
 	        			String logDate =  logInformations[0];
 	        			
 	        			LocalDateTime logDateRequestAccess = ParserUtils.formatDate(logDate);
-	        			
-	        			//System.out.println("Date Time Start Process: " + startDate);
-	        			
-	        			LocalDateTime requestEndTime = startDate.plusHours(1l);
-	        			
-	        			//System.out.println("Date Time End Process: " + requestEndDate);
 	        			
 	        			if((logDateRequestAccess.isEqual(startDate) || logDateRequestAccess.isAfter(startDate)) &&  (logDateRequestAccess.isEqual(requestEndTime) || logDateRequestAccess.isBefore(requestEndTime))){
 	        				 Log log = new Log(logInformations[0], logInformations[1],logInformations[2], Long.valueOf(logInformations[3]),logInformations[4]);
 	 	                    logs.add(log);
 	        			}
-	            		//}
 	            	}else{
 	            		errosLine.add(line);
 	            	}
@@ -122,12 +114,6 @@ public class Parser {
 	
 	private static Stream<Map.Entry<String,List<Log>>> groupLogInformations(List<Log> logs){
 		
-		if(OPERATION_THRESHOLD_ONE_HUNDRED.intValue() == threshold){
-			numberRegister = OPERATION_THRESHOLD_ONE_HUNDRED;
-		}else if (OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY.intValue() == threshold){
-			numberRegister = OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY;
-		}
-		
 		Stream<Map.Entry<String,List<Log>>> listGroupingByIp = logs.stream().collect(Collectors.groupingBy(Log::getIp)).entrySet().stream().filter(e -> e.getValue().size() > numberRegister);
 		
 		return listGroupingByIp;
@@ -158,6 +144,14 @@ public class Parser {
 				threshold = Integer.parseInt(infoArgs[1]);
 				System.out.println("threshold : " + threshold);
 			}
+		}
+		
+		if(OPERATION_THRESHOLD_ONE_HUNDRED.intValue() == threshold){
+			numberRegister = OPERATION_THRESHOLD_ONE_HUNDRED;
+			requestEndTime = startDate.plusHours(1l);
+		}else if (OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY.intValue() == threshold){
+			numberRegister = OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY;
+			requestEndTime = startDate.plusDays(1l);
 		}
 	}
 
