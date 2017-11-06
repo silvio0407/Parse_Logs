@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.ef.Parser.DAO.LogDAO;
 import com.ef.Parser.entity.Log;
 import com.ef.Parser.util.ParserUtils;
 
@@ -90,7 +91,10 @@ public class Parser {
 	                    
 	                    List<Log> itens = entry.getValue();
 	                    
-	                    itens.forEach(it -> System.out.println(it.toString()));
+	                    //itens.forEach(it -> System.out.println(it.toString()));
+	                    itens.forEach(it -> {
+	                    	new LogDAO().salvar(it);
+	                    });
 	                    
 	                }); 
 	            		

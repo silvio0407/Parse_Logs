@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class ConnectionFactory {
 
 	 private static Connection connection;
 	    
-	    private static String jdbcUrl = "jdbc:mysql://localhost:3306/MySQL57";
+	    private static String jdbcUrl = "jdbc:mysql://localhost:3306/parse_log";
 	    private static String user = "root";
 	    private static String pass = "root";
 	 	private static String driver = "com.mysql.jdbc.Driver";
@@ -18,9 +18,9 @@ public class DatabaseConnection {
 	 	//private static String pass = "postgres";
 	 	//private static String driver = "org.postgresql.Driver";
 	 	
-	 	private static DatabaseConnection instance;
+	 	private static ConnectionFactory instance;
 
-	 	private DatabaseConnection(){
+	 	private ConnectionFactory(){
 	 		try {
             	Class.forName(driver);
             }catch(Exception ex){
@@ -34,9 +34,9 @@ public class DatabaseConnection {
 	 		
 	 	}
 	 	
-	    public static DatabaseConnection getInstance() {
+	    public static ConnectionFactory getInstance() {
 	        if (instance == null) {
-	        	instance = new DatabaseConnection();
+	        	instance = new ConnectionFactory();
 	        }
 	        return instance;
 	    }

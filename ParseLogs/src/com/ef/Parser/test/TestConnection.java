@@ -1,12 +1,12 @@
 package com.ef.Parser.test;
 
-import com.ef.Parser.database.DatabaseConnection;
+import com.ef.Parser.database.ConnectionFactory;
 
 public class TestConnection {
 
 	public static void main(String[] args) {
 
-		DatabaseConnection conn = DatabaseConnection.getInstance();
+		ConnectionFactory conn = ConnectionFactory.getInstance();
 		
 		conn.getConnection();
 	}
