@@ -20,19 +20,15 @@ public class Parser {
 	private static Logger LOGGER = Logger.getLogger(Parser.class.toString());
 	
 	private static final Integer LINE_VALUE_PARAMETER = 5;
+	private static final Integer OPERATION_THRESHOLD_ONE_HUNDRED = 100;
+	private static final Integer OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY = 250;
 	
 	private static final String ARG_START_DATE = "--startDate";
 	private static final String ARG_DURATION = "--duration";
 	private static final String ARG_THRESHOLD = "--threshold";
-	
+	private static final String VALID_DURATION = "hourly";	
 	private static final String DELIMETER_EQUAL = "=";
 	private static final String DELIMETER_DOTE = ".";
-	
-	private static final String VALID_DURATION = "hourly";
-	
-	private static Integer OPERATION_THRESHOLD_ONE_HUNDRED = 100;
-	
-	private static Integer OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY = 250;
 	
 	private static LocalDateTime requestEndTime = null;
 	private static LocalDateTime startDate = null;
@@ -40,7 +36,6 @@ public class Parser {
 	private static Integer threshold = null;
 	private static Integer numberRegister = 0;
 	
-	//private static List<Log> logs = new ArrayList<Log>();
 	private static List<String> errosLine = new ArrayList<String>();
 	
 	public static void main(String[] args) {
@@ -79,19 +74,13 @@ public class Parser {
 	            }
 	            br.close();
 	            
-	           /* if(logs.size() > 100){*/
-	            	//LOGGER.info("Tamanho da lista: " + logs.size());
-	            
 	            Stream<Map.Entry<String,List<Log>>> listGroupingByIp = groupLogInformations(logs);
-	            	
-	            	//Stream<Map.Entry<String,List<Log>>> listGroupingByIp = logs.stream().collect(Collectors.groupingBy(Log::getIp)).entrySet().stream().filter(e -> e.getValue().size() > 216);
 	            	
 	            	listGroupingByIp.forEach(entry -> {
 	                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 	                    
 	                    List<Log> itens = entry.getValue();
 	                    
-	                    //itens.forEach(it -> System.out.println(it.toString()));
 	                    itens.forEach(it -> {
 	                    	new LogDAO().salvar(it);
 	                    });
@@ -158,5 +147,4 @@ public class Parser {
 			requestEndTime = startDate.plusDays(1l);
 		}
 	}
-
 }

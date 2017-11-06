@@ -2,7 +2,7 @@ package com.ef.Parser.entity;
 
 public class Log {
 
-	private String startDate;
+	private String requestDate;
 	private String ip;
 	private String descriptionRequest;
 	private Long duration;
@@ -10,17 +10,17 @@ public class Log {
 	
 	public Log(String startDate, String ip, String descriptionRequest, Long duration,
 			String systemInformation) {
-		this.startDate = startDate;
+		this.requestDate = startDate;
 		this.duration = duration;
 		this.ip = ip;
 		this.descriptionRequest = descriptionRequest;
 		this.systemInformation = systemInformation;
 	}
-	public String getStartDate() {
-		return startDate;
+	public String getRequestDate() {
+		return requestDate;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setRequestDate(String startDate) {
+		this.requestDate = startDate;
 	}
 	public Long getDuration() {
 		return duration;
@@ -50,7 +50,7 @@ public class Log {
 	
 	@Override
 	public String toString() {
-		return "Log [startDate=" + startDate + ", duration=" + duration + ", ip=" + ip + ", descriptionRequest="
+		return "Log [requestDate=" + requestDate + ", duration=" + duration + ", ip=" + ip + ", descriptionRequest="
 				+ descriptionRequest + ", systemInformation=" + systemInformation + "]";
 	}
 	

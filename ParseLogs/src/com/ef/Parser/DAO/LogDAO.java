@@ -17,7 +17,7 @@ public class LogDAO {
             String sql = "INSERT INTO log_information(data_request,ip,description_request) VALUES(?,?,?)";    
             try {    
                 PreparedStatement stmt = connection.getConnection().prepareStatement(sql);    
-                stmt.setString(1, log.getStartDate());    
+                stmt.setString(1, log.getRequestDate());    
                 stmt.setString(2, log.getIp());    
                 stmt.setString(3, log.getDescriptionRequest());    
                  stmt.execute();    
