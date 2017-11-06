@@ -8,14 +8,15 @@ public class DatabaseConnection {
 
 	 private static Connection connection;
 	    
-//	    private static String dsn = "jdbc:mysql://localhost:3306/agendaapp";
-	   // private static String username = "root";
-	   // private static String password = "root";
+	    private static String jdbcUrl = "jdbc:mysql://localhost:3306/MySQL57";
+	    private static String user = "root";
+	    private static String pass = "root";
+	 	private static String driver = "com.mysql.jdbc.Driver";
 	 
-	 	private static String jdbcUrl = "jdbc:postgresql://localhost:5432/hibernate";
-	 	private static String user = "postgres";
-	 	private static String pass = "postgres";
-	 	private static String driver = "org.postgresql.Driver";
+	 	//private static String jdbcUrl = "jdbc:postgresql://localhost:5432/hibernate";
+	 	//private static String user = "postgres";
+	 	//private static String pass = "postgres";
+	 	//private static String driver = "org.postgresql.Driver";
 	 	
 	 	private static DatabaseConnection instance;
 
