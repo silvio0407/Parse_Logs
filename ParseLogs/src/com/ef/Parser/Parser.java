@@ -23,6 +23,7 @@ public class Parser {
 	private static final Integer OPERATION_THRESHOLD_ONE_HUNDRED = 100;
 	private static final Integer OPERATION_THRESHOLD_TWO_HUNDRED_AND_FIFTY = 250;
 	
+	private static final String ARG_PATH_LOG_FILE = "--accesslog";
 	private static final String ARG_START_DATE = "--startDate";
 	private static final String ARG_DURATION = "--duration";
 	private static final String ARG_THRESHOLD = "--threshold";
@@ -33,6 +34,7 @@ public class Parser {
 	private static LocalDateTime requestEndTime = null;
 	private static LocalDateTime startDate = null;
 	private static String duration = null;
+	private static String pathLogFile = null;
 	private static Integer threshold = null;
 	private static Integer numberRegister = 0;
 	
@@ -40,8 +42,8 @@ public class Parser {
 	
 	public static void main(String[] args) {
 		
-		if(args.length != 3){
-			LOGGER.info("Invalid number of arguments, expected 3 but currently is " + args.length);
+		if(args.length != 4){
+			LOGGER.info("Invalid number of arguments, expected 4 but currently is " + args.length);
 			System.exit(0);
 		}
 		
@@ -50,7 +52,7 @@ public class Parser {
 		if(VALID_DURATION.equals(duration)){
 			try
 	        {
-	            FileReader fr = new FileReader("c:/Silvio/access.log");/*("c:/Estudo_Java/WalletHub/Test/test.txt");*/
+	            FileReader fr = new FileReader(pathLogFile);/*("c:/Estudo_Java/WalletHub/Test/test.txt");*/
 	            BufferedReader br = new BufferedReader(fr);
 	            String line;
 	            List<Log> logs = new ArrayList<Log>();
@@ -81,9 +83,10 @@ public class Parser {
 	                    
 	                    List<Log> itens = entry.getValue();
 	                    
-	                    itens.forEach(it -> {
+	                    /*itens.forEach(it -> {
 	                    	new LogDAO().salvar(it);
-	                    });
+	                    });*/
+	                    itens.forEach(it -> System.out.println(it.toString()));
 	                    
 	                }); 
 	            		
@@ -120,7 +123,11 @@ public class Parser {
 			
 			boolean isValid = ParserUtils.isValidArgument(infoArgs);
 			
-			if (isValid && infoArgs[0].equals(ARG_START_DATE)) {
+			if (isValid && infoArgs[0].equals(ARG_PATH_LOG_FILE)) {
+				
+				pathLogFile = infoArgs[1];
+				
+			}else if (isValid && infoArgs[0].equals(ARG_START_DATE)) {
 				
 				startDate = ParserUtils.formatDate(infoArgs[1].replace(DELIMETER_DOTE, " "));
 				
